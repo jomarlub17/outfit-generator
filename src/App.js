@@ -7,7 +7,7 @@ function App() {
     { type: 'Shirt', color: 'Black', material: 'Cotton', season: 'Summer'},
     { type: 'Pants', color: 'Blue', material: 'Denim', season: 'All'},
     { type: 'Jacket', color: 'Brown', material: 'Leather', season: 'Winter'}
-    
+
     
   ])
   
@@ -36,6 +36,10 @@ function App() {
 
   };
 
+  const deleteItem = (index) => {
+    setWardrobe(Wardrobe.filter((_, i) => i !== index));
+  };
+
 
    return (
    <div className = "App"  >
@@ -45,17 +49,17 @@ function App() {
     <div style = {{ border: '10px solid black', padding: '20px', margin: '20px', backgroundColor: 'lightgray'   }}>
       <h2>Add New Item</h2>
 
-      <input 
-        type = "text"
-        name = "type"
-        placeholder = "Type (e.g. Shirt, Pants)"
-        value = {newItem.type}
-        onChange= {handleInputChange}
-        style= {{ marging: '5px', padding: '80x' }}
-        />
+      <select name = "type" value = {newItem.type} onChange = {handleInputChange}>
+        <option value = " ">Select Type</option>
+        <option value = "Shirt">Shirt</option>
+        <option value = "Pants">Pants</option>
+        <option value = "Jacket">Jacket</option>
+        <option value = "Sweater">Sweater</option>
+        <option value = "Hoodie">Hoodie</option>
+      </select>
 
         <input
-          type = "color"
+          type = "text"
           name = "color"
           placeholder = "Color"
           value = {newItem.color}
@@ -72,14 +76,13 @@ function App() {
           style = {{ margin: '5px', padding: '8px'}}
         />
 
-        <input 
-          type = "text"
-          name = "season" 
-          placeholder = "Season" 
-          value = {newItem.season}
-          onChange = {handleInputChange}
-          style = {{ margin: '5px', padding: '8px'}}
-        />
+        <select name = "season" value = {newItem.season} onChange  = {handleInputChange}>
+          <option value = " "> Select Season </option>
+          <option value = "Spring">Spring</option>
+          <option value = "Summer">Summer</option>
+          <option value = "Fall">Fall</option>
+          <option value = "Winter">Winter</option>
+        </select>
 
         <br />
         <button onClick = {addItem} style = {{ margin: '10px', padding: '10px 20px'}}>
@@ -93,11 +96,15 @@ function App() {
     <p>You have {Wardrobe.length} items in your wardrobe</p>
     <div>
     {Wardrobe.map((item, index) => (
-      <div key= {index} style = {{ border: '10px solid black', padding: '10px', margin: '10px', backgroundColor: 'lightgray' }}>
+      <div key= {index} style = {{ border: '5px solid black', padding: '10px', margin: '10px', backgroundColor: 'lightgray' }}>
         <h3>{item.type}</h3>
         <p>Color: {item.color}</p>
         <p>Material: {item.material}</p>
         <p>Season: {item.season}</p>
+
+        <br />
+        <button onClick = {() => deleteItem(index)} style = {{ margin: '10px', padding: '10px 20px' }}>
+          Delete</button>
       </div>
     ))}
    </div>
