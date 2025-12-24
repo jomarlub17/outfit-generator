@@ -1,22 +1,19 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
-
 function App() {
   const [Wardrobe, setWardrobe] = useState(() => {
-    const saved = localStorage.getItem('Wardrobe');
+    const saved = localStorage.getItem('wardrobe');
     if (saved) {
-      return JSON.parse(saved);  
+      return JSON.parse(saved);
     }
-   return [
+    return [
       { type: 'Shirt', color: 'Black', material: 'Cotton', season: 'Summer'},
       { type: 'Pants', color: 'Blue', material: 'Denim', season: 'All'},
-      { type: 'Jacket', color: 'Brown', material: 'Leather', season: 'Winter'},
-      { type: 'Sweater', color: 'White', material: 'Wool', season: 'Fall'},
-      { type: 'Hoodie', color: 'Gray', material: 'Fleece', season: 'Fall'},
-      { type: 'Coat', color: 'Red', material: 'Down', season: 'Winter'}    
-  ];
-  });  
+      { type: 'Jacket', color: 'Brown', material: 'Leather', season: 'Winter'}
+    ];
+  });
+
   const [newItem, setNewItem] = useState({
     type: '', 
     color: '', 
@@ -27,9 +24,8 @@ function App() {
   const [generatedOutfit, setGeneratedOutfit] = useState(null);
 
   useEffect(() => {
-    localStorage.setItem('Wardrobe', JSON.stringify(Wardrobe));
+    localStorage.setItem('wardrobe', JSON.stringify(Wardrobe));
   }, [Wardrobe]);
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,155 +42,166 @@ function App() {
     } else {
       alert("Please fill in all fields");
     }
-
   };
 
   const deleteItem = (index) => {
     setWardrobe(Wardrobe.filter((_, i) => i !== index));
   };
 
-  const generateOutfit = () => {
-    const tops = Wardrobe.filter(item =>
-      item.type === 'Shirt' || item.type === 'Sweater' || item.type === 'Hoodie'
-    );
-    const bottoms = Wardrobe.filter(item =>
-      item.type === 'Pants'
-    );
-    const outwear = Wardrobe.filter(item =>
-      item.type === 'Jacket' || item.type === 'Coat'
-    );
-
-    if (tops.length === 0 || bottoms.length === 0) { 
-      alert("You need at least one top and one bottom to generate an outfit.");
-      return;
+  const clearWardrobe = () => {
+    if (window.confirm('Are you sure you want to delete all items?')) {
+      setWardrobe([]);
+      setGeneratedOutfit(null);
     }
-    const randomTop = tops[Math.floor(Math.random() * tops.length)];
-    const randomBottom = bottoms[Math.floor(Math.random() * bottoms.length)];
-    const randomOutwear = outwear.length > 0
-      ? outwear[Math.floor(Math.random() * outwear.length)]
-      : null;
-
-      setGeneratedOutfit({
-        top: randomTop,
-        bottom: randomBottom, 
-        outwear: randomOutwear
-      });
   };
 
+  const generateOutfit = () => {
+    const tops = Wardrobe.filter(item => 
+      item.type === 'Shirt' || item.type === 'Sweater' || item.type === 'Hoodie'
+    );
+    const bottoms = Wardrobe.filter(item => 
+      item.type === 'Pants'
+    );
+    const outerwear = Wardrobe.filter(item => 
+      item.type === 'Jacket'
+    );
 
-   return (
-   <div className = "App"  >
-    <h1>My Outfit Generator </h1> 
-    {/* form to add a new item to the wardrobe */}
+    if (tops.length === 0 || bottoms.length === 0) {
+      alert('You need at least one top and one bottom to generate an outfit!');
+      return;
+    }
 
-    <div style = {{ border: '10px solid black', padding: '20px', margin: '20px', backgroundColor: 'lighblue'   }}>
-      <h2>Add New Item</h2>
+    const randomTop = tops[Math.floor(Math.random() * tops.length)];
+    const randomBottom = bottoms[Math.floor(Math.random() * bottoms.length)];
+    const randomOuterwear = outerwear.length > 0 
+      ? outerwear[Math.floor(Math.random() * outerwear.length)]
+      : null;
 
-      <select name = "type" value = {newItem.type} onChange = {handleInputChange}>
-        <option value = " ">Select Type</option>
-        <option value = "Shirt">Shirt</option>
-        <option value = "Pants">Pants</option>
-        <option value = "Jacket">Jacket</option>
-        <option value = "Sweater">Sweater</option>
-        <option value = "Hoodie">Hoodie</option>
-      </select>
+    setGeneratedOutfit({
+      top: randomTop,
+      bottom: randomBottom,
+      outerwear: randomOuterwear
+    });
+  };
 
-        <input
-          type = "text"
-          name = "color"
-          placeholder = "Color"
-          value = {newItem.color}
-          onChange = {handleInputChange}
-          style = {{ margin: '5px', padding: '8px' }}
-        />
+  return (
+    <div className="App">
+      {/* Header */}
+      <div className="app-header">
+        <h1>The Outfit Generator</h1>
+        <p>Your personal wardrobe</p>
+      </div>
 
-        <input
-          type = "text"
-          name = "material" 
-          placeholder= "Material"
-          value = {newItem.material}
-          onChange = {handleInputChange}
-          style = {{ margin: '5px', padding: '8px'}}
-        />
+      {/* Add Item Section */}
+      <div className="add-item-section">
+        <h2>➕ Add New Item</h2>
+        <div className="form-grid">
+          <select name="type" value={newItem.type} onChange={handleInputChange}>
+            <option value="">Select Type</option>
+            <option value="Shirt">Shirt</option>
+            <option value="Pants">Pants</option>
+            <option value="Jacket">Jacket</option>
+            <option value="Sweater">Sweater</option>
+            <option value="Hoodie">Hoodie</option>
+          </select>
 
-        <select name = "season" value = {newItem.season} onChange  = {handleInputChange}>
-          <option value = " "> Select Season </option>
-          <option value = "Spring">Spring</option>
-          <option value = "Summer">Summer</option>
-          <option value = "Fall">Fall</option>
-          <option value = "Winter">Winter</option>
-        </select>
+          <input
+            type="text"
+            name="color"
+            placeholder="Color"
+            value={newItem.color}
+            onChange={handleInputChange}
+          />
 
-        <br />
-        <button onClick = {addItem} style = {{ margin: '10px', padding: '10px 20px'}}>
-          Add to Wardrobe
+          <input
+            type="text"
+            name="material" 
+            placeholder="Material"
+            value={newItem.material}
+            onChange={handleInputChange}
+          />
+
+          <select name="season" value={newItem.season} onChange={handleInputChange}>
+            <option value="">Select Season</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+            <option value="Winter">Winter</option>
+          </select>
+        </div>
+
+        <div className="button-group">
+          <button onClick={addItem} className="btn btn-primary">
+            Add to Wardrobe
+          </button>
+          <button onClick={clearWardrobe} className="btn btn-danger">
+            Clear All Items
+          </button>
+        </div>
+      </div>
+
+      {/* Outfit Generator Section */}
+      <div className="generator-section">
+        <h2>🎲 Generate Random Outfit</h2>
+        <button onClick={generateOutfit} className="btn btn-primary" style={{ fontSize: '1.1rem', padding: '15px 40px' }}>
+          Generate Outfit
         </button>
 
-    </div>
-    
-    <div style = {{ border: '10px solid black', padding: '20px', margin: '20px', backgroundColor: 'lightblue' }}>
-      <h2>Generate Random Outfit</h2>
-      <button
-        onClick = {generateOutfit}
-        style ={{
-          margin: '10px',
-          padding: '15px 30px',
-          backgroundColor: 'purple',
-          color: 'white',
-          border: 'none',
-        }}
-      >Generate Outfit</button>
+        {generatedOutfit && (
+          <div className="generated-outfit">
+            <h3>Your Perfect Outfit</h3>
+            <div className="outfit-items">
+              <div className="outfit-item">
+                <h4>Top</h4>
+                <p><strong>Type:</strong> {generatedOutfit.top.type}</p>
+                <p><strong>Color:</strong> {generatedOutfit.top.color}</p>
+                <p><strong>Material:</strong> {generatedOutfit.top.material}</p>
+                <p><strong>Season:</strong> {generatedOutfit.top.season}</p>
+              </div>
 
-      {/* display the generated outfit */ }
-      {generatedOutfit && (
-        <div style = {{ margin: '20px', padding: ' 15px', backgroundColor: 'white', borderRadius: '5px'}}>
-          <h3>Your Outfit:</h3>
+              <div className="outfit-item">
+                <h4>Bottom</h4>
+                <p><strong>Type:</strong> {generatedOutfit.bottom.type}</p>
+                <p><strong>Color:</strong> {generatedOutfit.bottom.color}</p>
+                <p><strong>Material:</strong> {generatedOutfit.bottom.material}</p>
+                <p><strong>Season:</strong> {generatedOutfit.bottom.season}</p>
+              </div>
 
-          <div style= {{ border: '2px solid black', padding: '10px', margin: '10px', }}>
-            <h4>Top: {generatedOutfit.top.type}</h4>
-            <p> Color: {generatedOutfit.top.color}</p>
-            <p>Material: {generatedOutfit.top.material}</p>
-            <p>Season: {generatedOutfit.top.season}</p>
+              {generatedOutfit.outerwear && (
+                <div className="outfit-item">
+                  <h4>Outerwear</h4>
+                  <p><strong>Type:</strong> {generatedOutfit.outerwear.type}</p>
+                  <p><strong>Color:</strong> {generatedOutfit.outerwear.color}</p>
+                  <p><strong>Material:</strong> {generatedOutfit.outerwear.material}</p>
+                  <p><strong>Season:</strong> {generatedOutfit.outerwear.season}</p>
+                </div>
+              )}
+            </div>
           </div>
-
-          <div style = {{ border: '2px solid black', padding: '10px', margin: '10px' }}>
-            <h4>Bottom: {generatedOutfit.bottom.type}</h4>
-            <p> Color: {generatedOutfit.bottom.color}</p>
-            <p>Material: {generatedOutfit.bottom.material}</p>
-            <p>Season: {generatedOutfit.bottom.season}</p>
-          </div>
-
-          <div style = {{ border: '2px solid black', padding: '10px', margin: '10px' }}>
-            <h4>Outwear: {generatedOutfit.outwear.type}</h4>
-            <p> Color: {generatedOutfit.outwear.color}</p>
-            <p>Material: {generatedOutfit.outwear.material}</p>
-          </div>
-        </div>
-      )}
-    </div>
-
-    {/* map over the wardrobe array and display each item's type, color, material, and season */}
-    <h2>My Wardrobe ({Wardrobe.length} items)</h2>
-    <p>You have {Wardrobe.length} items in your wardrobe</p>
-    <div>
-    {Wardrobe.map((item, index) => (
-      <div key= {index} style = {{ border: '5px solid black', padding: '10px', margin: '10px', backgroundColor: 'lightblue' }}>
-        <h3>{item.type}</h3>
-        <p>Color: {item.color}</p>
-        <p>Material: {item.material}</p>
-        <p>Season: {item.season}</p>
-
-        <br />
-        <button onClick = {() => deleteItem(index)} style = {{ margin: '10px', padding: '10px 20px' }}>
-          Delete</button>
+        )}
       </div>
-    ))}
-   </div>
-  </div>
- );
 
+      {/* Wardrobe Display */}
+      <div className="wardrobe-section">
+        <h2>My Wardrobe</h2>
+        <p className="item-count">You have {Wardrobe.length} items in your wardrobe</p>
+        
+        <div className="wardrobe-grid">
+          {Wardrobe.map((item, index) => (
+            <div key={index} className="clothing-card">
+              <h3>{item.type}</h3>
+              <p><strong>Color:</strong> {item.color}</p>
+              <p><strong>Material:</strong> {item.material}</p>
+              <p><strong>Season:</strong> {item.season}</p>
+              <button onClick={() => deleteItem(index)} className="btn btn-delete">
+                Delete Item
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-
- }
- export default App;
-
+export default App;
