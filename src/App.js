@@ -1,16 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 
 
 function App() {
-  const [Wardrobe, setWardrobe] = useState([
-    { type: 'Shirt', color: 'Black', material: 'Cotton', season: 'Summer'},
-    { type: 'Pants', color: 'Blue', material: 'Denim', season: 'All'},
-    { type: 'Jacket', color: 'Brown', material: 'Leather', season: 'Winter'}
-
-    
-  ])
-  
+  const [Wardrobe, setWardrobe] = useState(() => {
+    const saved = localStorage.getItem('Wardrobe');
+    if (saved) {
+      return JSON.parse(saved);  
+    }
+   return [
+      { type: 'Shirt', color: 'Black', material: 'Cotton', season: 'Summer'},
+      { type: 'Pants', color: 'Blue', material: 'Denim', season: 'All'},
+      { type: 'Jacket', color: 'Brown', material: 'Leather', season: 'Winter'},
+      { type: 'Sweater', color: 'White', material: 'Wool', season: 'Fall'},
+      { type: 'Hoodie', color: 'Gray', material: 'Fleece', season: 'Fall'},
+      { type: 'Coat', color: 'Red', material: 'Down', season: 'Winter'}    
+  ];
+  });  
   const [newItem, setNewItem] = useState({
     type: '', 
     color: '', 
@@ -19,6 +25,10 @@ function App() {
   });
 
   const [generatedOutfit, setGeneratedOutfit] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem('Wardrobe', JSON.stringify(Wardrobe));
+  }, [Wardrobe]);
 
 
   const handleInputChange = (e) => {
@@ -141,10 +151,23 @@ function App() {
           <h3>Your Outfit:</h3>
 
           <div style= {{ border: '2px solid black', padding: '10px', margin: '10px', }}>
-            <h4>Top: {generatedOutfit.top.color}</h4>
+            <h4>Top: {generatedOutfit.top.type}</h4>
             <p> Color: {generatedOutfit.top.color}</p>
             <p>Material: {generatedOutfit.top.material}</p>
             <p>Season: {generatedOutfit.top.season}</p>
+          </div>
+
+          <div style = {{ border: '2px solid black', padding: '10px', margin: '10px' }}>
+            <h4>Bottom: {generatedOutfit.bottom.type}</h4>
+            <p> Color: {generatedOutfit.bottom.color}</p>
+            <p>Material: {generatedOutfit.bottom.material}</p>
+            <p>Season: {generatedOutfit.bottom.season}</p>
+          </div>
+
+          <div style = {{ border: '2px solid black', padding: '10px', margin: '10px' }}>
+            <h4>Outwear: {generatedOutfit.outwear.type}</h4>
+            <p> Color: {generatedOutfit.outwear.color}</p>
+            <p>Material: {generatedOutfit.outwear.material}</p>
           </div>
         </div>
       )}
