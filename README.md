@@ -63,18 +63,5 @@ npm start
 
 ## Contact
 
-**Your Name** - [LinkedIn](www.linkedin.com/in/jomar-lubin-7ab4081b6 | [GitHub](jomarlub7) | [Email](jomarlubin17@icloud.com)
-```
+**Jomar Lubin** - [LinkedIn](www.linkedin.com/in/jomar-lubin-7ab4081b6 | [GitHub](https://github.com/jomarlub17) | Email: jomarlubin17@icloud.com
 
----
-
-## **Step 11: Add It to Your Resume**
-
-Under **Projects** section:
-```
-Outfit Generator | React, JavaScript, localStorage
-- Built a full-stack wardrobe management app with random outfit generation
-- Implemented data persistence using browser localStorage
-- Created responsive UI with modern CSS styling
-- Deployed live application to Vercel
-Live: your-app.vercel.app | Code: github.com/your-username/outfit-generator
