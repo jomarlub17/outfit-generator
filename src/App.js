@@ -124,7 +124,7 @@ function App() {
             onChange={handleInputChange}
           />
         {/* Dropdown For Material */}
-         <select name = "material" value = {newItem.materal} onChange = {handleInputChange}>
+         <select name = "material" value = {newItem.material} onChange = {handleInputChange}>
             <option value = "">Select Material</option>
             <option value = "Cotton">Cotton</option>
             <option value = "Polyester">Polyester</option>
