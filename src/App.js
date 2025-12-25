@@ -57,13 +57,16 @@ function App() {
 
   const generateOutfit = () => {
     const tops = Wardrobe.filter(item => 
-      item.type === 'Shirt' || item.type === 'Sweater' || item.type === 'Hoodie'
+      item.type === 'Shirt' || item.type === 'Sweater' || item.type === 'Hoodie' || item.type === 'blouse'
+      || item.type === 'Dress Shirt'
     );
     const bottoms = Wardrobe.filter(item => 
-      item.type === 'Pants'
+      item.type === 'Pants' || item.type === 'Shorts' || item.type === 'Skirt'
+      || item.type === 'Dress Pants'
     );
     const outerwear = Wardrobe.filter(item => 
-      item.type === 'Jacket'
+      item.type === 'Jacket' || item.type === 'Coat' || item.type === 'Vest'
+      || item.type === 'Sweater'
     );
 
     if (tops.length === 0 || bottoms.length === 0) {
@@ -88,7 +91,7 @@ function App() {
     <div className="App">
       {/* Header */}
       <div className="app-header">
-        <h1>The Outfit Generator</h1>
+        <h1>The OutFit Generator</h1>
         <p>Your personal wardrobe</p>
       </div>
 
@@ -96,6 +99,7 @@ function App() {
       <div className="add-item-section">
         <h2>➕ Add New Item</h2>
         <div className="form-grid">
+          {/* Dropdown For Type */}
           <select name="type" value={newItem.type} onChange={handleInputChange}>
             <option value="">Select Type</option>
             <option value="Shirt">Shirt</option>
@@ -103,6 +107,13 @@ function App() {
             <option value="Jacket">Jacket</option>
             <option value="Sweater">Sweater</option>
             <option value="Hoodie">Hoodie</option>
+            <option value="Shorts">Shorts</option>
+            <option value="Skirt">Skirt</option>
+            <option value="Dress Pants">Dress Pants</option>
+            <option value="Coat">Coat</option>
+            <option value="Blouse">Blouse</option>
+            <option value="Vest">Vest</option>
+            <option value="Dress Shirt">Dress Shirt</option>
           </select>
 
           <input
@@ -112,15 +123,22 @@ function App() {
             value={newItem.color}
             onChange={handleInputChange}
           />
+        {/* Dropdown For Material */}
+         <select name = "material" value = {newItem.materal} onChange = {handleInputChange}>
+            <option value = "">Select Material</option>
+            <option value = "Cotton">Cotton</option>
+            <option value = "Polyester">Polyester</option>
+            <option value = "Denim">Denim</option>
+            <option value = "Leather">Leather</option>
+            <option value = "Silk">Silk</option>
+            <option value = "Wool">Wool</option>
+            <option value = "Fleece">Fleece</option>
+            <option value = "Spandex">Spandex</option>
+            <option value = "Linen">Linen</option>
+            <option value = "cotton-polyester blend">Cotton-Polyester Blend</option>
+         </select>
 
-          <input
-            type="text"
-            name="material" 
-            placeholder="Material"
-            value={newItem.material}
-            onChange={handleInputChange}
-          />
-
+          {/* Dropdown For Season */}
           <select name="season" value={newItem.season} onChange={handleInputChange}>
             <option value="">Select Season</option>
             <option value="Spring">Spring</option>
