@@ -27,6 +27,9 @@ A smart wardrobe management app that helps you organize your clothes and generat
 
 ## UI
 
+<img width="1265" height="877" alt="Outfit-Gen-UI" src="https://github.com/user-attachments/assets/8eb2415f-62e9-44bd-a59d-b088f0248646" />
+
+
 ## What I Learned
 
 - React fundamentals (components, state, props)
