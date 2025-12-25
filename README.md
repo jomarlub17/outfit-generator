@@ -27,7 +27,8 @@ A smart wardrobe management app that helps you organize your clothes and generat
 
 ## UI
 
-<img width="1265" height="877" alt="Outfit-Gen-UI" src="https://github.com/user-attachments/assets/8eb2415f-62e9-44bd-a59d-b088f0248646" />
+<img width="1247" height="867" alt="Fit-Gen-Ui" src="https://github.com/user-attachments/assets/bc7303d0-a153-4bf8-89ed-844c81572626" />
+
 
 
 ## What I Learned
@@ -62,7 +63,7 @@ npm start
 
 ## Contact
 
-**Your Name** - [LinkedIn](your-linkedin) | [GitHub](your-github) | [Email](your-email)
+**Your Name** - [LinkedIn](www.linkedin.com/in/jomar-lubin-7ab4081b6 | [GitHub](jomarlub7) | [Email](jomarlubin17@icloud.com)
 ```
 
 ---
