@@ -53,7 +53,7 @@ A smart wardrobe management app that helps you organize your clothes and generat
 - I would Appreciate Any suggestions That you may have
 - Reach out Via Email or Linkedin messages
 
-## Running Locally
+## Running Locally.
 ```bash
 git clone https://github.com/YOUR-USERNAME/outfit-generator.git
 cd outfit-generator
